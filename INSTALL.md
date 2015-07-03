@@ -9,11 +9,11 @@ Check for latest version here: https://pypi.python.org/pypi/RPi.GPIO/
 
 You can read the RPi docs to be sure, but installation probably look like:
 
-    $ wget https://pypi.python.org/packages/source/R/RPi.GPIO/RPi.GPIO-0.5.9.tar.gz
-    $ tar zxf RPi.GPIO-*.tar.gz
-    $ cd RPi.GPIO-*
-    $ sudo python setup.py install
-    $ cd ..
+    wget https://pypi.python.org/packages/source/R/RPi.GPIO/RPi.GPIO-0.5.9.tar.gz
+    tar zxf RPi.GPIO-*.tar.gz
+    cd RPi.GPIO-*
+    sudo python setup.py install
+    cd ..
 
 
 ###
@@ -31,6 +31,6 @@ $ sudo mv crontab /etc/cron.d/access
 
 If you feel so inclined.
 
-    $ pip install -r requirements.txt
-    $ pip install -r dev_requirements.txt
-    $ python tests.py
+    pip install -r requirements.txt
+    pip install -r dev_requirements.txt
+    python tests.py
