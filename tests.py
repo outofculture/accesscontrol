@@ -7,10 +7,11 @@ from datetime import timedelta
 from freezegun.api import freeze_time
 from mock import Mock, patch
 
-sys.modules['RPi'] = Mock()
+mock_rpi = Mock()
+sys.modules['RPi'] = mock_rpi
 sys.modules['smbus'] = Mock()
 
-from access import Logger, Door
+from access import Logger, Door, Output
 
 
 class LoggerTests(unittest.TestCase):
@@ -40,7 +41,6 @@ class LoggerTests(unittest.TestCase):
         self.assertTrue(self.logger.debug_mode)
 
 
-@patch('access.Output', autospec=True)
 class DoorTests(unittest.TestCase):
     def setUp(self):
         self.mock_reader = Mock()
@@ -52,12 +52,12 @@ class DoorTests(unittest.TestCase):
         }
         self.door = Door(config, self.mock_reader)
 
-    def test_open_door_does_not_change_unlocked_on_its_first_call(self, mock_output):
+    def test_open_door_does_not_change_unlocked_on_its_first_call(self):
         self.assertFalse(self.door.unlocked)
         self.door.open_door({'name': 'test user'})
         self.assertFalse(self.door.unlocked)
 
-    def test_open_door_sets_unlocked_to_true_after_the_third_call(self, mock_output):
+    def test_open_door_sets_unlocked_to_true_after_the_third_call(self):
         self.assertFalse(self.door.unlocked)
         self.door.open_door({'name': 'test user'})
         with freeze_time(datetime.now() + timedelta(microseconds=35)):
@@ -65,6 +65,21 @@ class DoorTests(unittest.TestCase):
         with freeze_time(datetime.now() + timedelta(microseconds=70)):
             self.door.open_door({'name': 'test user'})
             self.assertTrue(self.door.unlocked)
+
+    @unittest.skip('todo')
+    def test_repeat_calls_to_open_door_with_different_users_will_not_count_toward_unlocking(self, mock_output):
+        self.fail()
+
+
+class OutputTests(unittest.TestCase):
+    def setUp(self):
+        self.unlock_value = 1
+        self.lock_value = self.unlock_value ^ 1
+        mock_rpi.reset_mock()
+        self.output = Output(1, self.unlock_value, 0)
+
+    def test_initialization_sends_deactivation_signal(self):
+        mock_rpi.GPIO.output.assert_called_once_with(self.output.address, self.lock_value)
 
 
 if __name__ == '__main__':
