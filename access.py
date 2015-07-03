@@ -52,7 +52,7 @@ class Output(object):
     # GPIOs and I2C shift-register outputs
 
     def __init__(self, address, unlock_value, open_delay):
-        if type(address) is int:
+        if isinstance(address, int):
             GPIO.setup(address, GPIO.OUT)
         self.address = address
         self.unlock_value = unlock_value
