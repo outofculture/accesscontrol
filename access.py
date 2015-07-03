@@ -2,6 +2,7 @@
 #
 # vim: et ai sw=4
 
+from __future__ import print_function
 import json
 import smtplib
 import threading
@@ -270,7 +271,7 @@ class Logger(object):
 
     def debug(self, message):
         if self.debug_mode:
-            print message
+            print(message)
 
     def toggle_debug(self, sig, frame):
         if self.debug_mode:
