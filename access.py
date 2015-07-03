@@ -73,7 +73,7 @@ class Output(object):
                 config.i2c[addr] &= 1 << bit ^ 0xFF
             bus.write_byte_data(addr, 0x44, config.i2c[addr])  # TPIC2810 compatible
         else:
-            debug("gpio is unknown type: %s" % type(self.address))
+            logger.debug("gpio is unknown type: %s" % type(self.address))
 
     def deactivate(self):
         self.set_out(False)
@@ -265,8 +265,8 @@ class AdvancedRule(object):
 
 
 class Logger(object):
-    def __init__(self, config):
-        self.config = config
+    def __init__(self, config_obj):
+        self.config = config_obj
         self.debug_mode = False
 
     def debug(self, message):
