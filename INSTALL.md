@@ -22,14 +22,14 @@ You can read the RPi docs to be sure, but installation probably look like:
 
 Edit crontab and make sure it is using the correct path
 
-$ sudo mv crontab /etc/cron.d/access
+    sudo cp crontab /etc/cron.d/access
 
 
 ###
 # Running tests
 ###
 
-If you feel so inclined.
+If you feel so inclined (no raspberry pi required).
 
     pip install -r requirements.txt
     pip install -r dev_requirements.txt
