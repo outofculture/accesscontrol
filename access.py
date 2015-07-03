@@ -61,9 +61,9 @@ class Output(object):
 
     def set_out(self, go_active=False):
         new_value = go_active ^ self.unlock_value ^ 1
-        if type(self.address) is int:
+        if isinstance(self.address, int):
             GPIO.output(self.address, new_value)
-        elif type(self.address) is unicode:
+        elif isinstance(self.address, basestring):
             (addr, bit) = [int(x, 16) for x in self.address.split('.')]
             if not config.i2c.get(addr):
                 config.i2c[addr] = 0
