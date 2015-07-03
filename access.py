@@ -322,13 +322,16 @@ def initialize(config, logger):
     signal.signal(signal.SIGWINCH, logger.toggle_debug)  # killall -WINCH python
     logger.report("%s access control is online" % socket.gethostname())
 
+
 def rehash(signal=None, b=None):
     logger.report("Reloading access list")
     config.add_config_file("users")
 
+
 def setup_readers():
     for reader in iter(config["readers"]):
 	CardReader(reader)
+
 
 def cleanup(a=None, b=None):
     message = "%s access control is going offline" % socket.gethostname()
